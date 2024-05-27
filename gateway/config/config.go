@@ -1,11 +1,13 @@
 package config
 
 type Config struct {
-	Port int
+	Port            int
+	UserServiceHost string
 }
 
 func NewConfig() *Config {
 	return &Config{
-		Port: 3000,
+		Port:            3000,
+		UserServiceHost: ":3001",
 	}
 }
