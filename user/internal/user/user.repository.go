@@ -1,29 +1,23 @@
 package user
 
-import "errors"
+import (
+	"gorm.io/gorm"
+)
 
 type Repository struct {
-	users []User
+	db *gorm.DB
 }
 
-func NewRepository() *Repository {
+func NewRepository(db *gorm.DB) *Repository {
 	return &Repository{
-		users: make([]User, 0),
+		db,
 	}
 }
 
-func (r *Repository) GetAllUsers() []User {
-	return r.users
+func (r *Repository) GetAllUsers(results *[]User) error {
+	return r.db.Model(&User{}).Find(&results).Error
 }
 
-func (r *Repository) CreateUser(u User) error {
-	for _, user := range r.users {
-		if user.Email == u.Email {
-			return errors.New("email already exists")
-		}
-	}
-
-	r.users = append(r.users, u)
-
-	return nil
+func (r *Repository) CreateUser(u *User) error {
+	return r.db.Model(&User{}).Create(u).Error
 }

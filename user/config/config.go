@@ -3,13 +3,15 @@ package config
 import "os"
 
 type Config struct {
-	Port string
+	Port  string
+	DbUri string
 }
 
 func NewConfig() *Config {
 	cfg := &Config{}
 
 	cfg.Port = env("PORT", "3001")
+	cfg.DbUri = env("DB_URI", "")
 
 	return cfg
 }

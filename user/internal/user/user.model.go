@@ -4,7 +4,7 @@ import "github.com/LiddleChild/microservices/user/internal/protobuf/user"
 
 type User struct {
 	Username string
-	Email    string
+	Email    string `gorm:"primaryKey"`
 }
 
 func FromServiceModel(u *user.User) User {

@@ -23,7 +23,13 @@ func (h *Handler) GetAllUsers(c context.Context, _ *user.GetAllUsersRequest) (*u
 		Users: make([]*user.User, 0),
 	}
 
-	for _, u := range h.repo.GetAllUsers() {
+	var users []User
+	err := h.repo.GetAllUsers(&users)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, u := range users {
 		res.Users = append(res.Users, u.ToServiceModel())
 	}
 
@@ -37,7 +43,7 @@ func (h *Handler) CreateUser(c context.Context, u *user.CreateUserRequest) (*use
 		return nil, errors.New("user fields cannot be empty")
 	}
 
-	err := h.repo.CreateUser(userModel)
+	err := h.repo.CreateUser(&userModel)
 	if err != nil {
 		return nil, err
 	}

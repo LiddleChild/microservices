@@ -9,6 +9,8 @@ services:
     environment:
       - PORT=3000
       - USER_SERVICE_HOST=mcs-user:3001
+    depends_on:
+      - mcs-user
     networks:
       - mcs
 
@@ -17,6 +19,24 @@ services:
       context: user
     environment:
       - PORT=3001
+      - DB_URI=postgres://postgres:postgres@mcs-db:5432/postgres_db?sslmode=disable
+    depends_on:
+      mcs-db:
+        condition: service_healthy
+    networks:
+      - mcs
+
+  mcs-db:
+    image: postgres:16-alpine3.20
+    environment:
+      POSTGRES_DB: postgres_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U postgres -d postgres'"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
     networks:
       - mcs
 
