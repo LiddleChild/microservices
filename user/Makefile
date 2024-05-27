@@ -3,7 +3,7 @@
 all: run
 
 run:
-	go run cmd/main.go
+	export PORT=3001; go run cmd/main.go
 
 proto:
 	protoc \

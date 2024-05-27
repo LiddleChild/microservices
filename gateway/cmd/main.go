@@ -13,6 +13,7 @@ import (
 
 func main() {
 	cfg := config.NewConfig()
+	fmt.Printf("Running config\n%v\n", cfg)
 
 	conn, err := grpc.NewClient(cfg.UserServiceHost, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {

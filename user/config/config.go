@@ -1,11 +1,24 @@
 package config
 
+import "os"
+
 type Config struct {
-	Port int
+	Port string
 }
 
 func NewConfig() *Config {
-	return &Config{
-		Port: 3001,
+	cfg := &Config{}
+
+	cfg.Port = env("PORT", "3001")
+
+	return cfg
+}
+
+func env(key string, fallback string) string {
+	val := os.Getenv(key)
+	if len(val) == 0 {
+		return fallback
 	}
+
+	return val
 }

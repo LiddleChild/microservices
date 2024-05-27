@@ -12,9 +12,10 @@ import (
 )
 
 func main() {
-	config := config.NewConfig()
+	cfg := config.NewConfig()
+	fmt.Printf("Running config\n%v\n", cfg)
 
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%v", config.Port))
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%v", cfg.Port))
 	if err != nil {
 		panic(err)
 	}
@@ -31,4 +32,5 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
 }
