@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "github.com/LiddleChild/microservices/user/internal/protobuf/user";
+
+message User {
+  string username = 1;
+  string email = 2;
+}
+
+message GetAllUsersRequest {}
+message GetAllUsersResponse {
+  repeated User users = 1;
+}
+
+message CreateUserRequest {
+  User user = 1;
+}
+
+message CreateUserResponse {}
+
+service UserService {
+  rpc GetAllUsers(GetAllUsersRequest) returns (GetAllUsersResponse);
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+}
